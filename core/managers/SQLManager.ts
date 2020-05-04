@@ -69,6 +69,7 @@ class SQLManager
     public postQuery(table: string, req: Request, res: Response)
     {
         this.console.print('info', 'POST request into table: '+ table)
+        this.console.print('info', Object.values(req.body))
 
         let el
         let names = []
