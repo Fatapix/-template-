@@ -73,7 +73,7 @@ class SQLManager
         let el
         let names = []
         for(el in req.body) names.push(el)
-        let values []
+        let values = []
         for(let i = 0; i < names.length; i++) values.push('?')
 
         let queryString = 'INSERT INTO '+ table +' ('+ names.toString() +') VALUES ('+ values +')'
