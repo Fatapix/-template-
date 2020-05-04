@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="FR-fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>[template] | (dev)</title>
+   
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+   
+    </head>
+    <body>
+        <div id="app">  
+            <div class="users">
+                <div class="card" v-for="user in users">
+                    <img src="https://picsum.photos/250/250" class="card-img-top">
+                    <div class="card-body">
+                        <h3 class="card-title">User:</h3>
+                        <h5>Username: {{ user.username }}</h5>
+                        <h5>Mail: {{ user.mail }}</h5>
+                        <h5>ID: {{ user.id }}</h5>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-primary">Show</button>
+                            <button type="button" @click="deleteUser(user.id)" class="btn btn-danger">Delete</button>
+                          </div>
+                    </div>
+                </div>
+            </div>
+            <button @click="update()" class="btn btn-primary">Show All Users</button>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Select user:</label>
+                <select class="form-control" id="exampleFormControlSelect1">
+                  <option v-for="user in users">{{ user.id }}</option>
+                </select>
+              </div>
+            <button @click="update()" class="btn btn-primary">Update All Users</button>
+
+        </div>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    users: []
+                },
+                methods: {
+                    update(){
+                        axios.get('http://localhost:3000/__get@users').then(res => this.users = res.data)
+                    },
+                    deleteUser(userID){
+                        axios.delete('http://localhost:3000/__delete@users/'+ userID)
+                    }
+                },
+                computed: {
+                    b: function () {
+                        return this.a + 1
+                    }
+  }
+            })
+        </script>
+        <style>
+            .users
+            {
+            }
+            .card
+            {
+                width: 400px;
+            }
+        </style>
+    </body>
+</html>

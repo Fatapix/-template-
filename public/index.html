@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="FR-fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>[template] | (dev)</title>
+   
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+   
+    </head>
+    <body>
+        <div id="app">
+            <!-- <p v-if="errors.length">
+                <ul>
+                    <li class="alert alert-danger" v-for="error in errors">{{ error }}</li>
+                </ul>
+            </p>
+            <form class="register" @submit="createUser">
+                <h1>Register: </h1>
+                <div class="form-row">
+                    <div class="col">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" name="username" id="username" v-model="username" placeholder="Your username...">
+                    </div>
+                    <div class="col">
+                        <label for="mail">Mail</label>
+                        <input type="mail" class="form-control" name="mail" id="mail" v-model="mail" placeholder="Your mail...">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" name="password" id="password" v-model="password" placeholder="Your password...">
+                </div>
+                <button type="submit" class="btn btn-primary">Go</button>
+            </form>
+            <a href="./users.html">Go to USERS page...</a> -->
+
+            <ul class="users">
+                <li class="user" v-for="user in users">
+                    {{ user }}
+                </li>
+            </ul>
+            <button v-on:click="update()">Update USERS</button>
+
+        </div>
+
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    users: []
+                },
+                methods: {
+                    update(){
+                        axios.get('http://localhost:3000/__get@users').then(res => this.users = res.data)
+                    }
+                }
+            })
+
+            // let app = new Vue({
+            //     el: "#app",
+            //     data: {
+            //         errors: [],
+            //         username: null,
+            //         password: null,
+            //         user: {},
+            //         mail: null
+            //     },
+            //     methods: {
+            //         createUser(e) {
+            //             this.errors = [];
+
+            //             if (!this.username) this.errors.push("Username required.");
+            //             else if (!this.mail) this.errors.push("Mail required.");
+            //             else if (!this.password) this.errors.push('Password required.');
+
+            //             if (!this.errors.length)
+            //             {
+            //                 this.user = {
+            //                     username: this.username,
+            //                     mail: this.mail,
+            //                     password: this.password
+            //                 }
+            //                 axios.post('http://localhost:3000/__add@users/', this.user);
+            //             }
+
+            //             e.preventDefault();
+            //         }
+            //     }
+            // })
+        </script>
+
+        <style>
+            *{
+                list-style: none;
+            }
+            body
+            {
+                margin-top: 10%;
+                margin-left: 20%;
+                margin-right: 20%;
+            }
+        </style>
+    </body>
+</html>

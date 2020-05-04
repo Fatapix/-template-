@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="FR-fr">
+    <head>
+
+        <meta charset="UTF-8">
+        <title>Register | [template] (dev)</title>
+   
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+   
+    </head>
+    <body>
+        <div id="app">
+            <nav class="navbar navbar-dark bg-dark">
+                <a class="navbar-brand" href="#">
+                    <h3>User area</h3>
+                </a>
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                      <a class="nav-link active" href="#">Register</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Log In</a>
+                    </li>
+                  </ul>
+            </nav>
+    
+            <form class="form-register" @submit="createUser">
+                <h1>Register:</h1>
+                <br>
+                <div class="form-group">
+                    <label for="username">
+                        <h4>Username:</h4>
+                    </label>
+                    <input type="text" class="form-control" name="username" id="username" placeholder="Enter your username here...">
+                </div>
+                <div class="form-group">
+                    <label for="mail">
+                        <h4>Mail:</h4>
+                    </label>
+                    <input type="mail" class="form-control" name="mail" id="mail" placeholder="Enter your mail here...">
+                </div>
+                <div class="form-group">
+                    <label for="password">
+                        <h4>Password:</h4>
+                    </label>
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password here...">
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+                <button type="button" class="btn btn-outline-dark">Log In</button>
+                <div v-if="errors.length">
+                    <ul>
+                        <li class="alert alert-dark" v-for="error in errors">{{ error }}</li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <script>
+        let app = new Vue({
+            el: "#app",
+            data: {
+                errors: [],
+                username: null,
+                password: null,
+                user: {},
+                mail: null
+            },
+            methods: {
+                createUser(e) {
+                    this.errors = [];
+
+                    if (!this.username) this.errors.push("Username required.");
+                    if (!this.mail) this.errors.push("Mail required.");
+                    if (!this.password) this.errors.push('Password required.');
+
+                    if (!this.errors.length)
+                    {
+                        this.user = {
+                            username: this.username,
+                            mail: this.mail,
+                            password: this.password
+                        }
+                        axios.post('http://localhost:3000/__add@users/', this.user)
+                    }
+
+                    e.preventDefault();
+                }
+            }
+        })
+        </script>
+        <style>
+            *, body
+            {
+                margin: 0;
+                padding: 0;
+                list-style: none;
+            }
+            .form-register
+            {
+                position: absolute;
+                width: 350px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        </style>
+    </body>
+</html>
