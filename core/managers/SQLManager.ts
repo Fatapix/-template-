@@ -69,6 +69,15 @@ class SQLManager
     public postQuery(table: string, req: Request, res: Response)
     {
         this.console.print('info', 'POST request into table: '+ table)
+
+        let el
+        let names = []
+        for(el in req.body) names.push(el)
+        let values []
+        for(let i = 0; i < names.length; i++) values.push('?')
+
+        let queryString = 'INSERT INTO '+ table +' ('+ names.toString() +') VALUES ('+ values +')'
+        this.SQLConnection().query(queryString, [req.body.username, req.body.mail, req.body.password])
     }
 
     public deleteQuery(table: string, id: number, req: Request, res: Response)
